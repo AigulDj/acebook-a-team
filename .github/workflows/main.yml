@@ -33,4 +33,4 @@ jobs:
       # Now we run our tests
       - name: Test with Jest, Cypress
         run:
-          nmp test
+          npm test
