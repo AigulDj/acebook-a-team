@@ -4,7 +4,9 @@ name: Build and Test
 
 # This workflow will run on any push to the repository
 on:
-  push
+  push:
+    branches:
+      - develop
 
 jobs:
   test:
@@ -13,7 +15,7 @@ jobs:
 
     steps:
       # Each step has a name, some code, and some options
-      - name: Check out the repo
+      - name: Checkout the repo
         uses: actions/checkout@v4 # This is a reference to some code to run
 
       # This step installs the Node version we want
