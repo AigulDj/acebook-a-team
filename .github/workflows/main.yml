@@ -22,7 +22,7 @@ jobs:
 
       # This step installs pip, pipenv, and our dependencies
       - name: Install dependencies
-        run: | # Note that there's no reference here — just commands to run
+        run: # Note that there's no reference here — just commands to run
             npm install
 
       - name: Mongodb
