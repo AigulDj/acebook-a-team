@@ -23,8 +23,7 @@ jobs:
 
       # This step installs pip, pipenv, and our dependencies
       - name: Install dependencies
-        run: |
-          npm install
+        run: npm install
 
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.10.0
@@ -33,6 +32,5 @@ jobs:
 
       # Now we run our tests
       - name: Test with Jest, Cypress
-        run: |
-          npm run start:test
+        run: npm run start:test
     
