@@ -14,9 +14,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4 # This is a reference to some code to run
 
-      # This step installs the Python version we want
+      # This step installs the Node version we want
       - name: Set up Node.js
-        uses: actions/setup-node.js@v3
+        uses: actions/setup-node@v3
         with:
             node-version: 18
 
