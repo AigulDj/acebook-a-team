@@ -32,7 +32,7 @@ jobs:
       - name: Deploy to S3
         run: aws s3 sync . s3://acebook-ai-lee/acebook-a-team.zip --delete
 
-        # Create deployment to CodeDeploy
+    # Create deployment to CodeDeploy
       - name: AWS Create Deployment
         run: |
           aws deploy create-deployment \
