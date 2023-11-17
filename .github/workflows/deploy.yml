@@ -37,3 +37,12 @@ jobs:
       - name: Upload to S3
         run: aws s3 cp deployment-package.zip s3://acebook-ai-lee/
     
+      # Create deployment to CodeDeploy
+      - name: AWS Create Deployment
+        run: |
+          aws deploy create-deployment \
+            --application-name lee-ai-acebook-app \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --deployment-group-name lee-ai-acebook-deployment \
+            --file-exists-behavior OVERWRITE \
+            --s3-location bucket=acebook-ai-lee,key=deployment-package.zip,bundleType=zip
