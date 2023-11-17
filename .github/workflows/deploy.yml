@@ -30,7 +30,7 @@ jobs:
           aws-region: eu-west-2
 
       - name: Deploy to S3
-        run: aws s3 sync . s3://sandra-acebook/sandra-acebook.zip --delete
+        run: aws s3 sync . s3://acebook-ai-lee/acebook-a-team.zip --delete
 
         # Create deployment to CodeDeploy
       - name: AWS Create Deployment
