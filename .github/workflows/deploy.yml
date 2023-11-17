@@ -30,7 +30,7 @@ jobs:
           aws-region: eu-west-2
 
       - name: Deploy to S3
-        run: aws s3 sync . s3://acebook-ai-lee/acebook-a-team.zip --delete
+        run: aws s3 sync . s3://acebook-ai-lee/ --delete
 
     # Create deployment to CodeDeploy
       - name: AWS Create Deployment
@@ -40,5 +40,5 @@ jobs:
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name lee-ai-acebook-deployment \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=acebook-ai-lee,key=acebook-a-team.zip,bundleType=zip \
+          --s3-location bucket=acebook-ai-lee,key=acebook-a-team,bundleType=zip \
             
