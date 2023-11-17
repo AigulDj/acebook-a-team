@@ -18,11 +18,13 @@ jobs:
         with:
           node-version: 18
       
-    # This step installs dependencies and zips the files
+    # This step installs dependencies
       - name: Install Dependencies and Zip
-        run: 
-          npm install
-          zip -r deployment-package.zip .
+        run: npm install
+
+      # This step zips the files
+      - name: Zip Files
+        run: zip -r deployment-package.zip .
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
