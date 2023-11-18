@@ -1,6 +1,6 @@
 # The name of the workflow
 # Testing new branch
-name: Build and Test
+name: Test
 
 # This workflow will run on any push to the repository
 on:
