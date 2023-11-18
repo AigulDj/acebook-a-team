@@ -21,7 +21,6 @@ jobs:
       - name: Install Dependencies and Zip
         run: npm install
 
-      # This step zips the files
       - name: Zip Files
         run: |
           mkdir deployment
