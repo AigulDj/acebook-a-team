@@ -1,0 +1,74 @@
+name: Build and Deploy to AWS S3 on Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      - name: Install Dependencies and Zip
+        run: npm install
+
+      # This step zips the files
+      - name: Zip Files
+        run: |
+          mkdir deployment
+          rsync -av --exclude-from=.gitignore --exclude=.git --exclude=deployment . deployment/  
+          cd deployment
+          zip -r deployment-package.zip .
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-artifact
+          path: deployment/deployment-package.zip 
+    
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: deployment-artifact
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Deploy to S3
+        run: aws s3 cp application_package.zip s3://kieran-keziah-acebook
+
+    # Create deployment to CodeDeploy
+      - name: AWS Create Deployment
+        run: |
+          aws deploy create-deployment \
+            --application-name lee-ai-acebook-app \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --deployment-group-name lee-ai-acebook-deployment \
+            --file-exists-behavior OVERWRITE \
+            --s3-location bucket=acebook-ai-lee,key=deployment-package.zip,bundleType=zip
